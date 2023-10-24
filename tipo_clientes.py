@@ -15,10 +15,25 @@ class Tipo_Gold(Tipo_Classic):
         # Cuentas
         self.caja_de_ahorro = 2
         self.cuenta_corriente = 1
-        self.cuenta_inversion = 1
-        self.chequera = "capaz"
+        self.cuenta_inversion = True
+        self.chequera = "capaz 1"
     def tarjeta_credito(self):
         return {"cantidad_tarjeta_credito": 2, "limite_extenciones": 5, "limite_un_pago":150000, "limite_en_cuotas":100000}
+
+class Tipo_Black(Tipo_Gold):
+    def __init__(self):
+        super().__init__()
+
+        self.caja_de_ahorro = 5
+        self.cuenta_corriente = 3
+        self.cuenta_inversion = True
+        self.chequera = "capaz 2"
+    def tarjeta_credito(self):
+        return {"cantidad_tarjeta_credito": 3,
+                "limite_extenciones": 10,
+                "limite_un_pago":500000,
+                "limite_en_cuotas":600000}
+
 
 #Caja de ahorro ejemplo
 class Caja_de_Ahorro:
