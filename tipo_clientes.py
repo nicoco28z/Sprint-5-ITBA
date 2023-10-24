@@ -18,7 +18,10 @@ class Tipo_Gold(Tipo_Classic):
         self.cuenta_inversion = True
         self.chequera = "capaz 1"
     def tarjeta_credito(self):
-        return {"cantidad_tarjeta_credito": 2, "limite_extenciones": 5, "limite_un_pago":150000, "limite_en_cuotas":100000}
+        return {"cantidad_tarjeta_credito": 2,
+                "limite_extenciones": 5,
+                "limite_un_pago":150000,
+                "limite_en_cuotas":100000}
 
 class Tipo_Black(Tipo_Gold):
     def __init__(self):
