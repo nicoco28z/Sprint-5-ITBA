@@ -12,3 +12,19 @@ class TestFunciones(unittest.TestCase):
 
 if __name__ == "__main":
     unittest.main()
+
+
+def calcular_monto_total(precio_dolar, monto):
+    impuesto_pais = 0.25  # Impuesto 25%
+    ganancias = 0.35  # Impuesto 35%
+    monto_total = monto + (monto * impuesto_pais) + (monto * ganancias)
+    return monto_total
+
+def descontar_comision(monto, comision_porcentaje):
+    comision = monto * (comision_porcentaje / 100)
+    monto_descontado = monto - comision
+    return monto_descontado
+
+def calcular_monto_plazo_fijo(monto, interes):
+    monto_final = monto + (monto * (interes / 100))
+    return monto_final
