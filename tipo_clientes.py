@@ -7,7 +7,9 @@ class Tipo_Classic:
                 "cuenta_corriente": 0,
                 "cuenta_inversion": False}
     def retiros(self):
-        return {"limite_de_retiro": True, "cantidad_limite_retiro": 5,"monto_limite_retiro": 10000}
+        return {"limite_de_retiro": True,
+                "cantidad_limite_retiro": 5,
+                "monto_limite_retiro": 10000}
     def tarjeta_credito(self):
         return False
 
@@ -20,7 +22,8 @@ class Tipo_Gold(Tipo_Classic):
                 "cuenta_corriente": 1,
                 "cuenta_inversion": True}
     def retiros(self):
-        return {"limite_de_retiro": False, "monto_limite_retiro": 20000}
+        return {"limite_de_retiro": False,
+                "monto_limite_retiro": 20000}
     def tarjeta_credito(self):
         return {"cantidad_tarjeta_credito": 2,
                 "tarjetas_disponibles":["Visa", "Mastercard"],
@@ -38,7 +41,8 @@ class Tipo_Black(Tipo_Gold):
                 "cuenta_corriente": 3,
                 "cuenta_inversion": True}
     def retiros(self):
-        return {"limite_de_retiro": False,"monto_limite_retiro": 100000}
+        return {"limite_de_retiro": False,
+                "monto_limite_retiro": 100000}
     def tarjeta_credito(self):
         # Diccionario con propiedades de tarjetas de Credito
         return {"cantidad_tarjeta_credito": 3,
