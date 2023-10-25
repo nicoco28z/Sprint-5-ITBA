@@ -21,7 +21,7 @@ a = {"numero": 100001,
 
 formatted_json = json.dumps(a, indent=4) # convierte el diccionario en un archivo json
 
-with open('salida.html', 'w') as salida:
+with open('salidasHTML/salida.html', 'w') as salida: # agregar varias salidas
 
     salida.write("<!DOCTYPE html>\n")
     salida.write('<html lang="es">\n')
