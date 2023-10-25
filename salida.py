@@ -1,3 +1,5 @@
+import json
+
 a = {"numero": 100001,
     "nombre": "Nicolas",
     "apellido": "Gaston",
@@ -17,17 +19,18 @@ a = {"numero": 100001,
                         "fecha": "10/10/2022 16: 14: 35",
                         "numero": 2}]}
 
+formatted_json = json.dumps(a, indent=4) # convierte el diccionario en un archivo json
 
 with open('salida.html', 'w') as salida:
 
     salida.write("<!DOCTYPE html>\n")
-    salida.write('<html lang="en">\n')
+    salida.write('<html lang="es">\n')
     salida.write("<head>\n")
     salida.write('\t<meta charset="UTF-8">\n')
     salida.write('\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n')
     salida.write("\t<title>Document</title>\n")
     salida.write("</head>\n")
     salida.write("<body>\n")
-    salida.write(f"<p>{a}</p>\n")
+    salida.write(f"<pre>{formatted_json}</pre>\n") # la etiqueta pre impide que se formatee el texto
     salida.write("</body>\n")
     salida.write("</html>\n")
