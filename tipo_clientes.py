@@ -1,24 +1,29 @@
 class Tipo_Classic:
     def __init__(self):
         self.tarjeta_debito = 1
-        self.caja_de_ahorro = 1
-        self.cuenta_corriente = 0
-        self.cuenta_inversion = 0
-        self.limite_de_retiro = 5
-        self.monto_limite_retiro = 10000
-
-        self.tarjeta_credito = 0
+        self.chequera = False
+    def cuentas(self):
+        return {"caja_de_ahorro": 1,
+                "cuenta_corriente": 0,
+                "cuenta_inversion": False}
+    def retiros(self):
+        return {"limite_de_retiro": True, "cantidad_limite_retiro": 5,"monto_limite_retiro": 10000}
+    def tarjeta_credito(self):
+        return False
 
 class Tipo_Gold(Tipo_Classic):
     def __init__(self):
         super().__init__()
-        # Cuentas
-        self.caja_de_ahorro = 2
-        self.cuenta_corriente = 1
-        self.cuenta_inversion = True
-        self.chequera = "capaz 1"
+        self.chequera = True
+    def cuentas(self):
+        return {"caja_de_ahorro": 2,
+                "cuenta_corriente": 1,
+                "cuenta_inversion": True}
+    def retiros(self):
+        return {"limite_de_retiro": False, "monto_limite_retiro": 20000}
     def tarjeta_credito(self):
         return {"cantidad_tarjeta_credito": 2,
+                "tarjetas_disponibles":["Visa", "Mastercard"],
                 "limite_extenciones": 5,
                 "limite_un_pago":150000,
                 "limite_en_cuotas":100000}
@@ -26,13 +31,18 @@ class Tipo_Gold(Tipo_Classic):
 class Tipo_Black(Tipo_Gold):
     def __init__(self):
         super().__init__()
-
-        self.caja_de_ahorro = 5
-        self.cuenta_corriente = 3
-        self.cuenta_inversion = True
-        self.chequera = "capaz 2"
+        self.tarjeta_debito = 5
+        self.chequera = True * 2
+    def cuentas(self):
+        return {"caja_de_ahorro": 5,
+                "cuenta_corriente": 3,
+                "cuenta_inversion": True}
+    def retiros(self):
+        return {"limite_de_retiro": False,"monto_limite_retiro": 100000}
     def tarjeta_credito(self):
+        # Diccionario con propiedades de tarjetas de Credito
         return {"cantidad_tarjeta_credito": 3,
+                "tarjetas_disponibles":["Visa", "Mastercard", "American Express"],
                 "limite_extenciones": 10,
                 "limite_un_pago":500000,
                 "limite_en_cuotas":600000}
@@ -74,6 +84,8 @@ class Cliente():
             print("No capo tu limite es:", self.tipo_cuenta.monto_limite_retiro)
     def consultar_saldo(self):
         self.cuentas[0].mostar_saldo()
+    def alta_caja_de_ahorro_pesos(self):
+        self.cuentas.append()
 
 
 cliente1 = Cliente()
