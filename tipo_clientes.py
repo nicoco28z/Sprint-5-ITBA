@@ -16,7 +16,7 @@ class Tipo_Classic:
 class Tipo_Gold(Tipo_Classic):
     def __init__(self):
         super().__init__()
-        self.chequera = True
+        self.chequera = 1
     def cuentas(self):
         return {"caja_de_ahorro": 2,
                 "cuenta_corriente": 1,
@@ -35,7 +35,7 @@ class Tipo_Black(Tipo_Gold):
     def __init__(self):
         super().__init__()
         self.tarjeta_debito = 5
-        self.chequera = True * 2
+        self.chequera = 2
     def cuentas(self):
         return {"caja_de_ahorro": 5,
                 "cuenta_corriente": 3,
