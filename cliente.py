@@ -1,8 +1,10 @@
+import json
+import datetime
+
 from cuentas import *
 from tipo_clientes import *
 from tarjetas import *
 from chequera import Chequera
-from datetime import datetime
 
 class Cliente():
     def __init__(self, name, apellido, dni, idCliente, sueldo):
@@ -23,6 +25,22 @@ class Cliente():
         self._tarjetas_credito = []
         self._tarjeta_debito = []
 
+    def salida(self):
+        formatted_json = json.dumps(self.movimientos, indent=4) # convierte el diccionario en un archivo json
+
+        with open('salidasHTML/salida.html', 'w') as salida:
+
+            salida.write("<!DOCTYPE html>\n")
+            salida.write('<html lang="es">\n')
+            salida.write("<head>\n")
+            salida.write('\t<meta charset="UTF-8">\n')
+            salida.write('\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n')
+            salida.write("\t<title>Document</title>\n")
+            salida.write("</head>\n")
+            salida.write("<body>\n")
+            salida.write(f"<pre>{formatted_json}</pre>\n") # la etiqueta pre impide que se formatee el texto, esto es para respetar la consigna
+            salida.write("</body>\n")
+            salida.write("</html>\n")
 
     #Getters
     def getNombre(self):
@@ -124,9 +142,9 @@ class Cliente():
                     "estado": "ACEPTADA" if bandera else "RECHAZADA",
                     "tipo": "RETIRO_EFECTIVO_CAJERO_AUTOMATICO",
                     "cuentaNumero": self._tipo_cuenta.id,
-                    "permitidoActualParaTransaccion": self._tipo_cuenta.retiros()["monto_limite_retiro"],
+                    "permitidoActualParaTransaccion": self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"],
                     "monto": monto,
-                    "fecha": datetime.now(),
+                    "fecha": datetime.datetime.now().isoformat(),
                     "numero": len(self.movimientos["transacciones"]) + 1
                     }
             self.movimientos["transacciones"].append(dic)
@@ -145,7 +163,7 @@ class Cliente():
                 "cuentaNumero": self._tipo_cuenta.id,
                 "permitidoActualParaTransaccion": "INDEFINIDO",
                 "monto": monto,
-                "fecha": datetime.now(),
+                "fecha": datetime.datetime.now().isoformat(),
                 "numero": len(self.movimientos["transacciones"]) + 1
                 }
         self.movimientos["transacciones"].append(dic)
@@ -183,7 +201,7 @@ class Cliente():
                 "cuentaNumero": self._tipo_cuenta.id,
                 "permitidoActualParaTransaccion": "NO TIENE PERMISOS" if props else props["limite_en_cuotas"],
                 "monto": monto,
-                "fecha": datetime.now(),
+                "fecha": datetime.datetime.now().isoformat(),
                 "numero": len(self.movimientos["transacciones"]) + 1
                 }
             self.movimientos["transacciones"].append(dic)
@@ -206,7 +224,7 @@ class Cliente():
                 "cuentaNumero": self._tipo_cuenta.id,
                 "permitidoActualParaTransaccion": "NO TIENE PERMISOS" if props else props["limite_en_cuotas"],
                 "monto": monto,
-                "fecha": datetime.now(),
+                "fecha": datetime.datetime.now().isoformat(),
                 "numero": len(self.movimientos["transacciones"]) + 1
                 }
             self.movimientos["transacciones"].append(dic)

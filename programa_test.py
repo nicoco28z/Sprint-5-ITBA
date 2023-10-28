@@ -54,7 +54,8 @@ class ProgramaBanco:
             "\n5. Retirar dinero"
             "\n6. Crear caja"
             "\n7. Mejorar cuenta"
-            "\n8. Salir")
+            "\n8. Imprimir movimientos"
+            "\n9. Salir")
 
     def ejecutar(self):
         while True:
@@ -80,6 +81,8 @@ class ProgramaBanco:
                 case "7":
                     self.cliente.upgradear()
                 case "8":
+                    self.cliente.salida()
+                case "9":
                     break
                 case _:
                     print("Opción no válida. Por favor, elige una opción válida.")
