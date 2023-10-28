@@ -28,6 +28,7 @@ class Tipo_Gold(Tipo_Classic):
     def __init__(self):
         super().__init__()
         self.chequera = 1
+        self.tipo = "Gold"
 
     def cuentas(self):
         return {
@@ -39,7 +40,7 @@ class Tipo_Gold(Tipo_Classic):
 
     def retiros(self):
         return {
-                "monto_limite_retiro": 20000
+                "monto_limite_retiro_cajero": 20000
                 }
 
     def tarjeta_credito(self):
@@ -56,6 +57,7 @@ class Tipo_Black(Tipo_Gold):
         super().__init__()
         self.tarjeta_debito = 5
         self.chequera = 2
+        self.tipo = "Black"
 
     def cuentas(self):
         return {
@@ -66,7 +68,7 @@ class Tipo_Black(Tipo_Gold):
 
     def retiros(self):
         return {
-                "monto_limite_retiro": 100000
+                "monto_limite_retiro_cajero": 100000
                 }
 
     def tarjeta_credito(self):

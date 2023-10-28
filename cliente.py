@@ -3,14 +3,14 @@ from tipo_clientes import *
 from tarjetas import Tarjeta
 
 class Cliente():
-    def __init__(self, name, apellido, dni, idCliente, ingresos):
+    def __init__(self, name, apellido, dni, idCliente, sueldo):
         self._tipo_cuenta = Tipo_Classic()
         self._cuentas = [CajaAhorroPeso(name + " " + apellido, 0)]
         self._name = name
         self._apellido = apellido
         self._dni = dni
         self._idCliente = idCliente 
-        self._ingresos = ingresos
+        self._sueldo = sueldo
         self._tarjetas = []
 
     #Getters
@@ -26,8 +26,8 @@ class Cliente():
     def getIdCliente(self):
         return self._idCliente
 
-    def getIngresos(self):
-        return self._ingresos
+    def getSueldo(self):
+        return self._sueldo
 
     def getTipoCuenta(self):
         return self._tipo_cuenta.tipo
@@ -64,33 +64,37 @@ class Cliente():
             return
         self._idCliente = i
 
-    def editIngresos(self, i): 
+    def editSueldo(self, i): 
         if( i < 50): 
-            print("Debe tener ingresos superiores a $50 pesos mensuales")
+            print("Debe tener sueldo superior a $50 pesos mensuales")
             return
-        self._ingresos = i
+        self._sueldo = i
 
 
-    def upgradear(self):
-        if self._tipo_cuenta_str == "classic":
+    def mejorar_cliente(self):
+        if self._tipo_cuenta.tipo == "classic":
             self.tipo_cuenta = Tipo_Gold()
-            self._tipo_cuenta_str = "gold"
 
     def __str__(self) -> str:
-        return self._tipo_cuenta_str
+        return self._tipo_cuenta.tipo
 
-    def crear_cuenta(self):
-        if len(self._cuentas) < self._tipo_cuenta.caja_de_ahorro:
-            print("Cuenta Creada")
-            self._cuentas.append(Caja_de_Ahorro())
+    def crear_cuenta_cajaAhorro(self, moneda):
+        if len(self._cuentas) < self._tipo_cuenta.cuentas()["caja_de_ahorro"]:
+            if(moneda in ["dolar", "peso"]):
+              self._cuentas.append(CajaAhorroPeso(name + " " + apellido, 0)) if moneda == "peso" else self._cuentas.append(CajaAhorroDolar(name + " " + apellido, 0))
+              print("Cuenta Creada")
+            else: print("La moneda ingresada es incorrecta")
         else:
             print("No capo, no podes crear mas")
 
-    def retirar_dinero(self, monto):
-        if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro"]:
+    def retirar_dinero_cajero(self, monto):
+        if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"]:
             print(self._cuentas[0].retirar(monto))
         else:
-            print("No capo tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro"])
+            print("Su limite de retiro por cajero es de: ", self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"])
+
+    def retirar_dinero(self, monto):
+        print(self._cuentas[0].retirar(monto))
 
     def consultar_saldo(self):
         print(self._cuentas[0].consultar_saldo())
