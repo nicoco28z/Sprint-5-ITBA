@@ -1,6 +1,6 @@
 from cuentas import *
 from tipo_clientes import *
-from tarjetas import Tarjeta
+from tarjetas import *
 from chequera import Chequera
 
 class Cliente():
@@ -12,7 +12,7 @@ class Cliente():
         self._dni = dni
         self._idCliente = idCliente 
         self._sueldo = sueldo
-        self.chequeras = 0
+        self.chequeras = []
         self.movimientos = []
         self._tarjetas_credito = []
         self._tarjeta_debito = []
@@ -31,8 +31,8 @@ class Cliente():
     def getIdCliente(self):
         return self._idCliente
 
-    def getSueldo(self):
-        return self._sueldo
+    def getIngresos(self):
+        return self._ingresos
 
     def getTipoCuenta(self):
         return self._tipo_cuenta.tipo
@@ -69,19 +69,20 @@ class Cliente():
             return
         self._idCliente = i
 
-    def editSueldo(self, i): 
+    def editIngresos(self, i): 
         if( i < 50): 
-            print("Debe tener sueldo superior a $50 pesos mensuales")
+            print("Debe tener ingresos superiores a $50 pesos mensuales")
             return
-        self._sueldo = i
+        self._ingresos = i
 
 
-    def mejorar_cliente(self):
-        if self._tipo_cuenta.tipo == "classic":
+    def upgradear(self):
+        if self._tipo_cuenta_str == "classic":
             self.tipo_cuenta = Tipo_Gold()
+            self._tipo_cuenta_str = "gold"
 
     def __str__(self) -> str:
-        return self._tipo_cuenta.tipo
+        return self._tipo_cuenta_str
 
     def crear_cuenta_cajaAhorro(self, moneda):
         if len(self._cuentas) < self._tipo_cuenta.cuentas()["caja_de_ahorro"]:
@@ -102,16 +103,12 @@ class Cliente():
             
         else:
             print("No puede agregar otra cuenta")
-            
 
     def retirar_dinero_cajero(self, monto):
         if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"]:
             print(self._cuentas[0].retirar(monto))
         else:
-            print("Su limite de retiro por cajero es de: ", self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"])
-
-    def retirar_dinero(self, monto):
-        print(self._cuentas[0].retirar(monto))
+            print("No capo tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro"])
 
     def consultar_saldo(self):
         print(self._cuentas[0].consultar_saldo())
@@ -165,7 +162,7 @@ class Cliente():
     
     def solicitar_chequera(self):
         if self.chequeras <= self._tipo_cuenta.chequera:
-            self.chequeras += 1
+            self.chequeras.append(Chequera(self._idCliente, len(self.chequeras)))
             print("Chequera agregada")
         else:
             print("No puede agregar otra chequera")

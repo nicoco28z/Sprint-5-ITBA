@@ -4,6 +4,7 @@ class Tipo_Classic:
         self.retiros_realizados = 0
         self.chequera = 0
         self.tipo = "Classic"
+        self.tarjetas_credito_disponibles = []
 
     def cuentas(self):
         return {
@@ -18,17 +19,16 @@ class Tipo_Classic:
                 "comision_retiro" : 10, #Cargo que se aplica cuando quiere retirar más de las veces que tiene eprmitido
                 "monto_limite_retiro": 10000
                 }
-
-
     #Este cliente no tiene habilitadas las tarjetas de crédito
     def tarjeta_credito(self):
         return False
+
 
 class Tipo_Gold(Tipo_Classic):
     def __init__(self):
         super().__init__()
         self.chequera = 1
-        self.tipo = "Gold"
+        self.tarjetas_credito_disponibles = ["Visa", "Mastercard"]
 
     def cuentas(self):
         return {
@@ -46,7 +46,6 @@ class Tipo_Gold(Tipo_Classic):
     def tarjeta_credito(self):
         return {
                 "cantidad_tarjeta_credito": 2,
-                "tarjetas_disponibles":["Visa", "Mastercard"],
                 "limite_extenciones": 5,
                 "limite_un_pago":150000,
                 "limite_en_cuotas":100000
@@ -57,7 +56,7 @@ class Tipo_Black(Tipo_Gold):
         super().__init__()
         self.tarjeta_debito = 5
         self.chequera = 2
-        self.tipo = "Black"
+        self.tarjetas_credito_disponibles.append("American Express")
 
     def cuentas(self):
         return {
@@ -75,7 +74,6 @@ class Tipo_Black(Tipo_Gold):
         # Diccionario con propiedades de tarjetas de Credito
         return {
                 "cantidad_tarjeta_credito": 3,
-                "tarjetas_disponibles":["Visa", "Mastercard", "American Express"],
                 "limite_extenciones": 10,
                 "limite_un_pago":500000,
                 "limite_en_cuotas":600000

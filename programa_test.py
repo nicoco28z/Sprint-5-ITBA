@@ -43,12 +43,13 @@ class ProgramaBanco:
 
     def mostrar_menu(self):
         print("\nMenú:"
-            "\n1. Mis Datos"
-            "\n2. Editar Datos"
+            "\n1. Mis datos"
+            "\n2. Actualizar mis datos"
             "\n3. Consultar saldo"
-            "\n4. Retirar dinero"
-            "\n5. Crear cuenta"
-            "\n6. Salir")
+            "\n4. Depositar dinero"
+            "\n5. Retirar dinero"
+            "\n6. Crear cuenta"
+            "\n7. Salir")
 
     def ejecutar(self):
         while True:
@@ -64,11 +65,14 @@ class ProgramaBanco:
                 case "3":
                     self.cliente.consultar_saldo()
                 case "4":
+                    deposito = int(input("Cuanto dinero desea depositar: "))
+                    self.cliente.depositar(deposito)
+                case "5":
                     monto = int(input("Ingrese el monto a retirar: "))
                     self.cliente.retirar_dinero(monto)
-                case "5":
-                    self.cliente.crear_cuenta()
                 case "6":
+                    self.cliente.crear_cuenta_cajaAhorro("peso")
+                case "7":
                     break
                 case _:
                     print("Opción no válida. Por favor, elige una opción válida.")

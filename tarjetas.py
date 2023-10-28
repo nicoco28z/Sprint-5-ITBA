@@ -1,10 +1,14 @@
 import random
 
-class Tarjeta():
+class Tarjeta_Debito():
+    def __init__(self):
+        numero = '5'
+        for _ in range(15):
+            numero += str(random.randint(0, 9))
 
-    def generar_numero(self, tipo):
-        if tipo not in ['Visa', 'Mastercard', 'American Express']:
-            print("Tipo de tarjeta no válido")
+class Tarjeta_Credito():
+    def __init__(self, tipo) -> None:
+        self._extenciones = []
 
         if tipo == 'Visa':
             numero = '4'
@@ -18,4 +22,13 @@ class Tarjeta():
             numero = '2' + random.choice(['4', '7'])
             for _ in range(13):
                 numero += str(random.randint(0, 9))
-        return numero
+
+        self.numero_tarjeta = numero
+
+    def consultar_extenciones(self):
+        return self._extenciones
+
+    def solicitar_extencion(self):
+        self._extenciones.append("Extencion")
+        print("Extencion creada.")
+    
