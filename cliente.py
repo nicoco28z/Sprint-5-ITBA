@@ -14,7 +14,12 @@ class Cliente():
         self._idCliente = idCliente 
         self._sueldo = sueldo
         self.chequeras = []
-        self.movimientos = []
+        self.movimientos = {"numero": idCliente,
+                            "nombre": name,
+                            "apellido": apellido,
+                            "dni": dni,
+                            "tipo": self._tipo_cuenta.tipo,
+                            "transacciones":[]}
         self._tarjetas_credito = []
         self._tarjeta_debito = []
 
@@ -56,15 +61,12 @@ class Cliente():
         self._apellido = a
 
     def editDni(self, d): 
-        #Extender para validar que sean numeros
         if( d.__len__() != 8): 
             print("El DNI debe tener 8 caracteres")
             return
         self._dni = d
 
     def editIdCliente(self, i): 
-        #Validacion cualquiera
-        #Hay que validar que los id's no se repitan, no se si corresponde igual hacer eso
         if( i < 1): 
             print("El Id del Cliente no debe ser menor que 1")
             return
@@ -235,12 +237,3 @@ class Cliente():
     def venta_dolares(dolares):
         pesos = dolares * 1000
         return pesos
-
-
-
-c1 = Cliente("Aldo", "Andres", "44614368", 1, 30000)
-print(c1.getNombre() + " " + c1.getApellido())
-c1.consultar_saldo()
-c1.retirar_dinero(15000)
-c1.depositar(20000)
-c1.retirar_dinero(10000)
