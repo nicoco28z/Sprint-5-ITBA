@@ -1,6 +1,8 @@
+import os
+
 from cuentas import *
 from tipo_clientes import *
-from tarjetas import Tarjeta
+from tarjetas import *
 from cliente import Cliente
 
 class ProgramaBanco:
@@ -15,12 +17,14 @@ class ProgramaBanco:
         
     def editar_datos_cliente(self):
         while True:
+            os.system('cls')
             print("\nMenú:"
                 "\n1. Modificar Nombre:"
                 "\n2. Modificar Apellido"
                 "\n3. Modificar Ingresos mensuales"
                 "\n4. Cancelar.")
             opciones = input("\nQue dato desea actualizar:")
+            os.system('cls')
 
             match opciones:
                 case "1":
@@ -48,14 +52,15 @@ class ProgramaBanco:
             "\n3. Consultar saldo"
             "\n4. Depositar dinero"
             "\n5. Retirar dinero"
-            "\n6. Crear cuenta"
-            "\n7. Salir")
+            "\n6. Crear caja"
+            "\n7. Mejorar cuenta"
+            "\n8. Salir")
 
     def ejecutar(self):
         while True:
             self.mostrar_menu()
-            opcion = input("Selecciona una opción (1, 2, 3, 4, 5): ")
-
+            opcion = input("Selecciona una opción (1, 2, 3, 4, 5, etc): ")
+            os.system('cls')
             match opcion:
 
                 case "1":
@@ -69,10 +74,12 @@ class ProgramaBanco:
                     self.cliente.depositar(deposito)
                 case "5":
                     monto = int(input("Ingrese el monto a retirar: "))
-                    self.cliente.retirar_dinero(monto)
+                    self.cliente.retirar_dinero_cajero(monto)
                 case "6":
                     self.cliente.crear_cuenta_cajaAhorro("peso")
                 case "7":
+                    self.cliente.upgradear()
+                case "8":
                     break
                 case _:
                     print("Opción no válida. Por favor, elige una opción válida.")

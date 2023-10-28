@@ -79,11 +79,13 @@ class Cliente():
 
     def upgradear(self):
         if (self._tipo_cuenta.tipo == "Classic"):
-            self.tipo_cuenta = Tipo_Gold()
-            self._tipo_cuenta.tipo = "Gold"
+            self._tipo_cuenta = Tipo_Gold()
+            print(f"Cuenta mejorada a {self._tipo_cuenta.tipo}")
         elif (self._tipo_cuenta.tipo == "Gold"):
-            self.tipo_cuenta = Tipo_Black()
-            self._tipo_cuenta.tipo = "Black"
+            self._tipo_cuenta = Tipo_Black()
+            print(f"Cuenta mejorada a {self._tipo_cuenta.tipo}")
+        elif (self._tipo_cuenta.tipo == "Black"):
+            print("Su cuenta ya tiene el mejor rango posible.")
 
     def __str__(self):
         return self._tipo_cuenta.tipo
@@ -91,7 +93,7 @@ class Cliente():
     def crear_cuenta_cajaAhorro(self, moneda):
         if len(self._cuentas) < self._tipo_cuenta.cuentas()["caja_de_ahorro"]:
             if(moneda in ["dolar", "peso"]):
-                self._cuentas.append(CajaAhorroPeso(self.name + " " + self.apellido, 0)) if moneda == "peso" else self._cuentas.append(CajaAhorroDolar(self.name + " " + self.apellido, 0))
+                self._cuentas.append(CajaAhorroPeso(self._name + " " + self._apellido, 0)) if moneda == "peso" else self._cuentas.append(CajaAhorroDolar(self._name + " " + self._apellido, 0))
                 print("Cuenta Creada")
             else: print("La moneda ingresada es incorrecta")
             
@@ -101,12 +103,12 @@ class Cliente():
     def crear_cuenta_corriente(self, moneda):
         if len(self._cuentas) < self._tipo_cuenta.cuentas()["caja_corriente"]:
             if(moneda in ["dolar", "peso"]):
-                self._cuentas.append(CuentaCorrientePeso(self.name + " " + self.apellido, 0)) if moneda == "peso" else self._cuentas.append(CuentaCorrienteDolar(self.name + " " + self.apellido, 0))
+                self._cuentas.append(CuentaCorrientePeso(self._name + " " + self._apellido, 0)) if moneda == "peso" else self._cuentas.append(CuentaCorrienteDolar(self._name + " " + self._apellido, 0))
                 print("Cuenta Creada")
             else: print("La moneda ingresada es incorrecta")
             
         else:
-            print("No puede agregar otra cuenta")
+            print("No puedes agregar otra cuenta")
 
     def retirar_dinero_cajero(self, monto):
         if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"]:
@@ -128,8 +130,7 @@ class Cliente():
             self.movimientos["transacciones"].append(dic)
 
         else:
-            print("Su limite es de: ", self._tipo_cuenta.retiros()["monto_limite_retiro"])
-        
+            print("Tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"])
 
     def consultar_saldo(self):
         print(self._cuentas[0].consultar_saldo())
