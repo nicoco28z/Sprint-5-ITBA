@@ -64,32 +64,104 @@ class Caja_de_Ahorro:
 #Cliente Modelo para seguir
 class Cliente():
     def __init__(self):
-        self.tipo_cuenta = Tipo_Classic()
-        self.tipo_cuenta_str = "classic"
-        self.info_tarjetas = self.tipo_cuenta.tarjeta_credito()
-        self.cuentas = [Caja_de_Ahorro()]
+        self._tipo_cuenta = Tipo_Classic()
+        self._tipo_cuenta_str = "classic"
+        self._cuentas = [Caja_de_Ahorro()]
+        self._name = name
+        self._surname = surname
+        self._dni = dni
+        self._idCliente = idCliente 
+        self._ingresos = ingresos
+        self._tarjetas = []
+
+    
+
+    #Getters
+    def getName(self):
+        return self._name
+
+    def getSurname(self):
+        return self._surname
+
+    def getDni(self):
+        return self._dni
+
+    def getIdCliente(self):
+        return self._idCliente
+
+    def getIngresos(self):
+        return self._ingresos
+
+    def getTipoCuenta(self):
+        return self._tipoCuenta
+
+    def getTarjetas(self):
+        return self._tarjetas
+
+    #Setters
+    def editName(self, a): 
+        if( a.__len__() < 3): 
+            print("El nombre debe tener al menos 3 caracteres")
+            return
+        self._name = a
+
+    def editSurname(self, a): 
+        if( a.__len__() < 3): 
+            print("El apelido debe tener al menos 3 caracteres")
+            return
+        self._surname = a
+
+    def editDni(self, d): 
+        #Extender para validar que sean numeros
+        if( d.__len__() != 8): 
+            print("El DNI debe tener 8 caracteres")
+            return
+        self._dni = d
+
+    def editIdCliente(self, i): 
+        #Validacion cualquiera
+        #Hay que validar que los id's no se repitan, no se si corresponde igual hacer eso
+        if( i < 1): 
+            print("El Id del Cliente no debe ser menor que 1")
+            return
+        self._idCliente = i
+
+    def editIngresos(self, i): 
+        if( i < 50): 
+            print("Debe tener ingresos superiores a $50 pesos mensuales")
+            return
+        self._ingresos = i
+
+    def editTipoCuenta(self, n): 
+        if( n != "gold" and n != "black" and n != "classic"): 
+            print("No debería poder cambiar asi xq si nomas jeje")
+            return
+        self._tipoCuenta = n
+
+
     def upgradear(self):
-        if self.tipo_cuenta_str == "classic":
+        if self._tipo_cuenta_str == "classic":
             self.tipo_cuenta = Tipo_Gold()
-            self.tipo_cuenta_str = "gold"
+            self._tipo_cuenta_str = "gold"
+
     def __str__(self) -> str:
-        return self.tipo_cuenta_str
+        return self._tipo_cuenta_str
     def crear_cuenta(self):
-        if len(self.cuentas) < self.tipo_cuenta.caja_de_ahorro:
+        if len(self._cuentas) < self._tipo_cuenta.caja_de_ahorro:
             print("Cuenta Creada")
-            self.cuentas.append(Caja_de_Ahorro())
+            self._cuentas.append(Caja_de_Ahorro())
         else:
             print("No capo, no podes crear mas")
     def retirar_dinero(self, monto):
-        if monto <= self.tipo_cuenta.monto_limite_retiro:
+        if monto <= self._tipo_cuenta.monto_limite_retiro:
             print("Retiro exitoso")
-            self.cuentas[0].retiro_efectivo(monto)
+            self._cuentas[0].retiro_efectivo(monto)
         else:
             print("No capo tu limite es:", self.tipo_cuenta.monto_limite_retiro)
     def consultar_saldo(self):
-        self.cuentas[0].mostar_saldo()
+        self._cuentas[0].mostar_saldo()
     def alta_caja_de_ahorro_pesos(self):
-        self.cuentas.append()
+        self._cuentas.append()
 
 
 cliente1 = Cliente()
