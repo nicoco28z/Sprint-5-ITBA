@@ -17,7 +17,7 @@ class Tipo_Classic:
         return {
                 "cantidad_limite_retiro_cajero": 5,
                 "comision_retiro" : 10, #Cargo que se aplica cuando quiere retirar más de las veces que tiene eprmitido
-                "monto_limite_retiro": 10000
+                "monto_limite_retiro_cajero": 10000
                 }
     #Este cliente no tiene habilitadas las tarjetas de crédito
     def tarjeta_credito(self):
