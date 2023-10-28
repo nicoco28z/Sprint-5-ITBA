@@ -14,9 +14,9 @@ class Cuenta:
     def retirar(self, cantidad):
         if 0 < cantidad <= self.saldo:
             self.saldo -= cantidad
-            return f"Retiro de ${cantidad} realizado. Saldo actual: ${self.saldo}"
+            return True
         else:
-            return "Fondos insuficientes o cantidad inválida."
+            return False
 
     def consultar_saldo(self):
         return f"Saldo actual: ${self.saldo}"

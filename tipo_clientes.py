@@ -1,7 +1,8 @@
 class Tipo_Classic:
-    def __init__(self):
+    def __init__(self, id=1):
         self.tarjeta_debito = 1
         self.retiros_realizados = 0
+        self.id = id
         self.chequera = 0
         self.tipo = "Classic"
         self.tarjetas_credito_disponibles = []

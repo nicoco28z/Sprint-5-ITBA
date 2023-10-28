@@ -2,6 +2,7 @@ from cuentas import *
 from tipo_clientes import *
 from tarjetas import *
 from chequera import Chequera
+from datetime import datetime
 
 class Cliente():
     def __init__(self, name, apellido, dni, idCliente, sueldo):
@@ -109,51 +110,104 @@ class Cliente():
 
     def retirar_dinero_cajero(self, monto):
         if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro_cajero"]:
-            print(self._cuentas[0].retirar(monto))
+            bandera = self._cuentas[0].retirar(monto)
+            if bandera:
+                print('Retiro de cajero exitoso')
+            else:
+                print("Su saldo es insuficiente")
+
+            dic = {
+                    "estado": "ACEPTADA" if bandera else "RECHAZADA",
+                    "tipo": "RETIRO_EFECTIVO_CAJERO_AUTOMATICO",
+                    "cuentaNumero": self._tipo_cuenta.id,
+                    "permitidoActualParaTransaccion": self._tipo_cuenta.retiros()["monto_limite_retiro"],
+                    "monto": monto,
+                    "fecha": datetime.now(),
+                    "numero": len(self.movimientos["transacciones"]) + 1
+                    }
+            self.movimientos["transacciones"].append(dic)
+
         else:
-            print("No capo tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro"])
+            print("Su limite es de: ", self._tipo_cuenta.retiros()["monto_limite_retiro"])
+        
 
     def consultar_saldo(self):
         print(self._cuentas[0].consultar_saldo())
 
     def depositar(self, monto):
         print(self._cuentas[0].depositar(monto))
+        dic = {
+                "estado": "ACEPTADA",
+                "tipo": "DEPOSITO",
+                "cuentaNumero": self._tipo_cuenta.id,
+                "permitidoActualParaTransaccion": "INDEFINIDO",
+                "monto": monto,
+                "fecha": datetime.now(),
+                "numero": len(self.movimientos["transacciones"]) + 1
+                }
+        self.movimientos["transacciones"].append(dic)
     
     def solicitar_tarjeta_debito(self):
-        if len(self._tarjeta_debito) < self._tipo_cliente.tarjeta_debito:
+        if len(self._tarjeta_debito) < self._tipo_cuenta.tarjeta_debito:
             self._tarjeta_debito.append(Tarjeta_Debito())
             print("Tarjeta de debito solicitada.")
         else:
             print("Usted no puede solicitar mas tarjetas de debito.")
 
     def solicitar_tarjeta_credito(self, tipo):
-        props = self._tipo_cliente.tarjeta_credito()
+        props = self._tipo_cuenta.tarjeta_credito()
         if props:
-            if tipo in self._tipo_cliente.tarjetas_credito_disponibles:
-                self._tipo_cliente.tarjetas_credito_disponibles.remove(tipo)
+            if tipo in self._tipo_cuenta.tarjetas_credito_disponibles:
+                self._tipo_cuenta.tarjetas_credito_disponibles.remove(tipo)
                 self._tarjetas_credito.append(Tarjeta_Credito(tipo))
             else:
                 print("No dispones de este tipo de tarjeta de credito.")
         else:
             print("No dispones de tarjetas de credito.")
     
-    def compra_en_cuotas(self, monto):
-        props = self._tipo_cliente.tarjeta_credito()
+    def compra_en_cuotas(self, monto, tipo):
+        props = self._tipo_cuenta.tarjeta_credito()
         if self._tarjetas_credito:
-            if monto <= props["limite_en_cuotas"]:
+            bandera = monto <= props["limite_en_cuotas"]
+            if bandera:
                 print("Compra Exitosa.")
             else:
                 print("El monto maximo para compra en cuotas es de:", props["limite_en_cuotas"])
+            
+            dic = {
+                "estado": "ACEPTADA" if bandera else "RECHAZADA",
+                "tipo": "COMPRA_EN_CUOTAS_TARJETA_" + tipo,
+                "cuentaNumero": self._tipo_cuenta.id,
+                "permitidoActualParaTransaccion": "NO TIENE PERMISOS" if props else props["limite_en_cuotas"],
+                "monto": monto,
+                "fecha": datetime.now(),
+                "numero": len(self.movimientos["transacciones"]) + 1
+                }
+            self.movimientos["transacciones"].append(dic)
+
         else:
             print("Usted no posee tarjeta de credito.")
 
-    def compra_en_un_pago(self, monto):
+    def compra_en_un_pago(self, monto, tipo):
         props = self._tipo_cliente.tarjeta_credito()
         if self._tarjetas_credito:
-            if monto <= props["limite_un_pago"]:
+            bandera = monto <= props["limite_un_pago"]
+            if bandera:
                 print("Compra Exitosa.")
             else:
                 print("El monto maximo para compra en un pago es de:", props["limite_un_pago"])
+            
+            dic = {
+                "estado": "ACEPTADA" if bandera else "RECHAZADA",
+                "tipo": "COMPRA_TARJETA_CREDITO_" + tipo,
+                "cuentaNumero": self._tipo_cuenta.id,
+                "permitidoActualParaTransaccion": "NO TIENE PERMISOS" if props else props["limite_en_cuotas"],
+                "monto": monto,
+                "fecha": datetime.now(),
+                "numero": len(self.movimientos["transacciones"]) + 1
+                }
+            self.movimientos["transacciones"].append(dic)
+
         else:
             print("Usted no posee tarjeta de credito.")
     
@@ -165,10 +219,21 @@ class Cliente():
     
     def solicitar_chequera(self):
         if self.chequeras <= self._tipo_cuenta.chequera:
-            self.chequeras.append(Chequera(self._idCliente, len(self.chequeras)))
+            self.chequeras.append(Chequera(self._idCliente, len(self.chequeras) + 1))
             print("Chequera agregada")
         else:
             print("No puede agregar otra chequera")
+    
+    def comprar_dolares(pesos):
+        impuesto_pais = 0.45  # Impuesto 45%
+        ganancias = 0.55  # Impuesto 55%
+        valReal = pesos - (pesos * impuesto_pais) - (pesos * ganancias)
+        dolares = valReal / 1000
+        return dolares
+    
+    def venta_dolares(dolares):
+        pesos = dolares * 1000
+        return pesos
 
 
 
