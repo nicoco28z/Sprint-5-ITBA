@@ -29,6 +29,7 @@ class Tipo_Gold(Tipo_Classic):
         super().__init__()
         self.chequera = 1
         self.tarjetas_credito_disponibles = ["Visa", "Mastercard"]
+        self.tipo = "Gold"
 
     def cuentas(self):
         return {
@@ -57,6 +58,7 @@ class Tipo_Black(Tipo_Gold):
         self.tarjeta_debito = 5
         self.chequera = 2
         self.tarjetas_credito_disponibles.append("American Express")
+        self.tipo = "Black"
 
     def cuentas(self):
         return {

@@ -77,12 +77,15 @@ class Cliente():
 
 
     def upgradear(self):
-        if self._tipo_cuenta_str == "classic":
+        if (self._tipo_cuenta.tipo == "Classic"):
             self.tipo_cuenta = Tipo_Gold()
-            self._tipo_cuenta_str = "gold"
+            self._tipo_cuenta.tipo = "Gold"
+        elif (self._tipo_cuenta.tipo == "Gold"):
+            self.tipo_cuenta = Tipo_Black()
+            self._tipo_cuenta.tipo = "Black"
 
-    def __str__(self) -> str:
-        return self._tipo_cuenta_str
+    def __str__(self):
+        return self._tipo_cuenta.tipo
 
     def crear_cuenta_cajaAhorro(self, moneda):
         if len(self._cuentas) < self._tipo_cuenta.cuentas()["caja_de_ahorro"]:
