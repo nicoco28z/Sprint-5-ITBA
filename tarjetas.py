@@ -1,9 +1,10 @@
 import random
 
-class Tarjeta:
+class Tarjeta():
+
     def generar_numero(self, tipo):
         if tipo not in ['Visa', 'Mastercard', 'American Express']:
-            raise ValueError("Tipo de tarjeta no válido")
+            print("Tipo de tarjeta no válido")
 
         if tipo == 'Visa':
             numero = '4'
