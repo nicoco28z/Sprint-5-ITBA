@@ -21,7 +21,7 @@ a = {"numero": 100001,
 
 formatted_json = json.dumps(a, indent=4) # convierte el diccionario en un archivo json
 
-with open('salidasHTML/salida.html', 'w') as salida: # agregar varias salidas
+with open('salidasHTML/salida.html', 'w') as salida: #Pendiente: agregar varias salidas
 
     salida.write("<!DOCTYPE html>\n")
     salida.write('<html lang="es">\n')
@@ -31,6 +31,6 @@ with open('salidasHTML/salida.html', 'w') as salida: # agregar varias salidas
     salida.write("\t<title>Document</title>\n")
     salida.write("</head>\n")
     salida.write("<body>\n")
-    salida.write(f"<pre>{formatted_json}</pre>\n") # la etiqueta pre impide que se formatee el texto
+    salida.write(f"<pre>{formatted_json}</pre>\n") # la etiqueta pre impide que se formatee el texto, esto es para respetar la consigna
     salida.write("</body>\n")
     salida.write("</html>\n")

@@ -2,6 +2,7 @@ class Tipo_Classic:
     def __init__(self):
         self.tarjeta_debito = 1
         self.chequera = False
+
     def cuentas(self):
         return {"caja_de_ahorro": 1,
                 "cuenta_corriente": 0,
@@ -63,7 +64,7 @@ class Caja_de_Ahorro:
 
 #Cliente Modelo para seguir
 class Cliente():
-    def __init__(self):
+    def __init__(self, name, surname, dni, idCliente, ingresos):
         self._tipo_cuenta = Tipo_Classic()
         self._tipo_cuenta_str = "classic"
         self._cuentas = [Caja_de_Ahorro()]
@@ -77,10 +78,10 @@ class Cliente():
     
 
     #Getters
-    def getName(self):
+    def getNombre(self):
         return self._name
 
-    def getSurname(self):
+    def getApellido(self):
         return self._surname
 
     def getDni(self):
@@ -93,7 +94,7 @@ class Cliente():
         return self._ingresos
 
     def getTipoCuenta(self):
-        return self._tipoCuenta
+        return self._tipo_cuenta_str
 
     def getTarjetas(self):
         return self._tarjetas
@@ -132,12 +133,6 @@ class Cliente():
             return
         self._ingresos = i
 
-    def editTipoCuenta(self, n): 
-        if( n != "gold" and n != "black" and n != "classic"): 
-            print("No debería poder cambiar asi xq si nomas jeje")
-            return
-        self._tipoCuenta = n
-
 
     def upgradear(self):
         if self._tipo_cuenta_str == "classic":
@@ -152,19 +147,20 @@ class Cliente():
             self._cuentas.append(Caja_de_Ahorro())
         else:
             print("No capo, no podes crear mas")
+
     def retirar_dinero(self, monto):
-        if monto <= self._tipo_cuenta.monto_limite_retiro:
+        if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro"]:
             print("Retiro exitoso")
             self._cuentas[0].retiro_efectivo(monto)
         else:
-            print("No capo tu limite es:", self.tipo_cuenta.monto_limite_retiro)
+            print("No capo tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro"])
     def consultar_saldo(self):
         self._cuentas[0].mostar_saldo()
     def alta_caja_de_ahorro_pesos(self):
         self._cuentas.append()
 
 
-cliente1 = Cliente()
+cliente1 = Cliente("Aldo", "Andres", "44614368", 1, 30000)
 cliente1.consultar_saldo()
 cliente1.retirar_dinero(15000)
 cliente1.retirar_dinero(10000)
