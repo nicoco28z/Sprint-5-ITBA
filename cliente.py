@@ -3,12 +3,11 @@ from tipo_clientes import *
 from tarjetas import Tarjeta
 
 class Cliente():
-    def __init__(self, name, surname, dni, idCliente, ingresos):
+    def __init__(self, name, apellido, dni, idCliente, ingresos):
         self._tipo_cuenta = Tipo_Classic()
-        self._tipo_cuenta_str = "classic"
-        self._cuentas = [Caja_de_Ahorro()]
+        self._cuentas = [CajaAhorroPeso(name + " " + apellido, 0)]
         self._name = name
-        self._surname = surname
+        self._apellido = apellido
         self._dni = dni
         self._idCliente = idCliente 
         self._ingresos = ingresos
@@ -19,7 +18,7 @@ class Cliente():
         return self._name
 
     def getApellido(self):
-        return self._surname
+        return self._apellido
 
     def getDni(self):
         return self._dni
@@ -31,10 +30,11 @@ class Cliente():
         return self._ingresos
 
     def getTipoCuenta(self):
-        return self._tipo_cuenta_str
+        return self._tipo_cuenta.tipo
 
     def getTarjetas(self):
         return self._tarjetas
+
 
     #Setters
     def editName(self, a): 
@@ -43,11 +43,11 @@ class Cliente():
             return
         self._name = a
 
-    def editSurname(self, a): 
+    def editApellido(self, a): 
         if( a.__len__() < 3): 
             print("El apelido debe tener al menos 3 caracteres")
             return
-        self._surname = a
+        self._apellido = a
 
     def editDni(self, d): 
         #Extender para validar que sean numeros
@@ -78,7 +78,7 @@ class Cliente():
 
     def __str__(self) -> str:
         return self._tipo_cuenta_str
-        
+
     def crear_cuenta(self):
         if len(self._cuentas) < self._tipo_cuenta.caja_de_ahorro:
             print("Cuenta Creada")
@@ -88,18 +88,24 @@ class Cliente():
 
     def retirar_dinero(self, monto):
         if monto <= self._tipo_cuenta.retiros()["monto_limite_retiro"]:
-            print("Retiro exitoso")
-            self._cuentas[0].retiro_efectivo(monto)
+            print(self._cuentas[0].retirar(monto))
         else:
             print("No capo tu limite es:", self._tipo_cuenta.retiros()["monto_limite_retiro"])
+
     def consultar_saldo(self):
-        self._cuentas[0].mostar_saldo()
+        print(self._cuentas[0].consultar_saldo())
+
+    def depositar(self, monto):
+        print(self._cuentas[0].depositar(monto))
+
+  #REVISAR
     def alta_caja_de_ahorro_pesos(self):
         self._cuentas.append()
 
 
-cliente1 = Cliente("Aldo", "Andres", "44614368", 1, 30000)
-cliente1.consultar_saldo()
-cliente1.retirar_dinero(15000)
-cliente1.retirar_dinero(10000)
-cliente1.consultar_saldo()
+c1 = Cliente("Aldo", "Andres", "44614368", 1, 30000)
+print(c1.getNombre() + " " + c1.getApellido())
+c1.consultar_saldo()
+c1.retirar_dinero(15000)
+c1.depositar(20000)
+c1.retirar_dinero(10000)
