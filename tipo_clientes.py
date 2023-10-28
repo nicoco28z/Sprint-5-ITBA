@@ -40,7 +40,7 @@ class Tipo_Gold(Tipo_Classic):
 
     def retiros(self):
         return {
-                "monto_limite_retiro": 20000
+                "monto_limite_retiro_cajero": 20000
                 }
 
     def tarjeta_credito(self):
@@ -67,7 +67,7 @@ class Tipo_Black(Tipo_Gold):
 
     def retiros(self):
         return {
-                "monto_limite_retiro": 100000
+                "monto_limite_retiro_cajero": 100000
                 }
 
     def tarjeta_credito(self):
