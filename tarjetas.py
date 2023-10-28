@@ -18,10 +18,3 @@ class Tarjeta:
             for _ in range(13):
                 numero += str(random.randint(0, 9))
         return numero
-
-tarjeta = Tarjeta()
-tipo_elegido = input("Elija el tipo de tarjeta (visa, mastercard, american")
-numero_tarjeta = tarjeta.generar_numero(tipo_elegido)
-
-print(f'Tipo: {tipo_elegido}')
-print(f'Número: {numero_tarjeta}')

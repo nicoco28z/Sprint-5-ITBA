@@ -1,3 +1,7 @@
+from cuentas import *
+from tipo_clientes import *
+from tarjetas import Tarjeta
+
 class Cliente():
     def __init__(self, name, surname, dni, idCliente, ingresos):
         self._tipo_cuenta = Tipo_Classic()
@@ -74,6 +78,7 @@ class Cliente():
 
     def __str__(self) -> str:
         return self._tipo_cuenta_str
+        
     def crear_cuenta(self):
         if len(self._cuentas) < self._tipo_cuenta.caja_de_ahorro:
             print("Cuenta Creada")
